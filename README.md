@@ -2,7 +2,7 @@
 
 ## Simple add-on for TypeScript
 
-![TSSuper logo](https://github.com/thainanluiz/TSSuper/blob/main/assets/logos/tssuper259x259.png "Logo TSSuper")
+![TSSuper logo](https://github.com/thainanluiz/TSSuper/blob/main/assets/logo/tssuper259x259.png "Logo TSSuper")
 
 <br>
 How to install
