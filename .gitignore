@@ -1,0 +1,10 @@
+/dist
+/node_modules
+
+.env
+.env.local
+.env.development
+
+.tsbuildinfo
+*.tsbuildinfo
+.npmignore
