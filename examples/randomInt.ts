@@ -1,15 +1,15 @@
-// Import the randomInt function from the built distribution of the project
-const { randomInt } = require("tssuper");
+// Import the randomInt function from the built distribution of the "tssuper" project
+const { randomInt } = require("@thainanluiz/tssuper");
 
-// Generate a random integer between 1 and 10 (inclusive)
-// This function have a type of { min: number, max: number } this is the RandomIntProps type (you can use wherever you want in your project)
-// Type definition: type RandomIntProps = { min: number; max: number; };
+// Define an object with properties min and max to specify the desired range
+const randomIntProps = { min: 1, max: 10 };
 
-const x = randomInt({ min: 1, max: 10 });
+// Generate a random integer within the specified range
+const x = randomInt(randomIntProps);
 
-// Use the generated random integer
-console.log(x);
+// Print the generated random integer to the console
+console.log("Random number:", x);
 
-// Output: 5
-
-// Obs: The output will be different each time you run the script
+// Example output:
+// Random number: 5
+// (The output will be different each time you run the script)

@@ -1,6 +1,6 @@
 {
-  "name": "tssuper",
-  "version": "0.0.1",
+  "name": "@thainanluiz/tssuper",
+  "version": "0.0.2",
   "description": "Simple add-on for TypeScript",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
