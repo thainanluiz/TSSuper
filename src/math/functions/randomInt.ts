@@ -3,7 +3,12 @@ import { RandomIntProps } from "../types/randomIntProps";
 /**
  * Generate a random integer between min and max (inclusive)
  * @param {RandomIntProps} { min, max }
+ *
  * @returns {number}
+ *
+ * @throws {Error} min and max must be numbers
+ * @throws {Error} min and max must be integers
+ * @throws {Error} min must be less than or equal to max
  */
 export function randomInt({ min, max }: RandomIntProps): number {
   // Validate that min and max are numbers

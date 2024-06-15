@@ -11,25 +11,26 @@ How to install
 npm i @thainanluiz/tssuper
 ```
 
-Package available [here] | current stable version [?.?.?] | current version [0.0.2]
+Package available [here] | current stable version [1.0.0] | current version [0.0.6]
 
 <br>
 
-How to import
+How to use
 
 ```ts
-const tssuper = require("@thainanluiz/tssuper");
+const { math } = require("@thainanluiz/tssuper");
 ```
 
 <br>
 
-See [functions.md] to get available functions <br>
+See [functions] to get available functions <br>
 See [examples] folder <br>
 The entire [changelog here] <br>
 
-[functions.md]: https://github.com/thainanluiz/TSSuper/blob/main/FUNCTIONS.md
 [here]: https://www.npmjs.com/package/@thainanluiz/tssuper
+[1.0.0]: https://www.npmjs.com/package/@thainanluiz/tssuper/v/1.0.0
+[0.0.6]: https://www.npmjs.com/package/@thainanluiz/tssuper/v/0.0.6
+[functions]: https://github.com/thainanluiz/TSSuper/blob/main/FUNCTIONS.md
 [examples]: https://github.com/thainanluiz/TSSuper/blob/main/examples/
 [changelog here]: https://github.com/thainanluiz/TSSuper/blob/main/CHANGELOG.md
-[0.0.2]: https://www.npmjs.com/package/@thainanluiz/tssuper/v/0.0.2
 [TSSuper]: https://github.com/thainanluiz/TSSuper

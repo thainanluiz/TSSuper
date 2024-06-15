@@ -1,6 +1,6 @@
 {
   "name": "@thainanluiz/tssuper",
-  "version": "0.0.2",
+  "version": "0.0.6",
   "description": "Simple add-on for TypeScript",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -17,6 +17,14 @@
     "addon",
     "library"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thainanluiz/TSSuper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thainanluiz/TSSuper/issues"
+  },
+  "homepage": "https://github.com/thainanluiz/TSSuper#readme",
   "author": "Thainan Luiz",
   "license": "GPL-3.0-only",
   "devDependencies": {
