@@ -2,6 +2,10 @@
 
 TSSUPER project updates.
 
+## [0.0.2] - 15/06/2024 - by [@thainanluiz].
+
+### Package renamed from "TSSuper" to "@thainanluiz/tssuper"
+
 ## [0.0.1] - 15/06/2024 - by [@thainanluiz].
 
 ### Added
