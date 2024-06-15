@@ -2,7 +2,7 @@
 
 ## 0.0.1
 
-- [randomInt](https://github.com/thainanluiz/TSSuper/blob/main/examples/randomInt.js)( {min: number, max: number } ) <br>
+- [randomInt](https://github.com/thainanluiz/TSSuper/blob/main/examples/randomInt.ts)( {min: number, max: number } ) <br>
   Will return a value between the maximum and minimum number.
 
   <br>
