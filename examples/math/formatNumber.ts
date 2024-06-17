@@ -1,5 +1,5 @@
 // Import the math module from "@thainanluiz/tssuper"
-import { math } from "@thainanluiz/tssuper";
+import { math } from "../../dist/index";
 
 // Destructure the math module to obtain the formatNumber function
 const { formatNumber } = math;
