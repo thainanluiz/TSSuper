@@ -1,15 +1,12 @@
-name: Run Jest tests
+name: CI
 
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - "**"
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,5 +20,11 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Run tests
+      - name: Build
+        run: npm run build
+
+      - name: Test
         run: npm test
+
+      - run: npm install --frozen-lockfile
+      - run: npm run lint && npm run build

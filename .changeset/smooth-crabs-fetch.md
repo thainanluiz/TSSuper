@@ -1,0 +1,5 @@
+---
+"@thainanluiz/tssuper": patch
+---
+
+test
