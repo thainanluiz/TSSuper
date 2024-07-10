@@ -1,5 +1,23 @@
 # Current Functions Available
 
+## 0.0.11
+
+- [fixedRepeater](https://github.com/thainanluiz/TSSuper/blob/main/examples/delay/fixedRepeater.ts) ({ callback: Function, ms: number, times: number })
+
+  Repeats a function for a fixed amount of time.
+
+  ### Parameters
+
+  - `callback`: Function to be repeated.
+  - `ms`: Time in milliseconds to repeat the function.
+  - `times`: Number of times to repeat the function.
+
+  ### Returns
+
+  Returns a promise that resolves when the function is done repeating.
+
+  <br>
+
 ## 0.0.10
 
 - [fixedDelay](https://github.com/thainanluiz/TSSuper/blob/main/examples/delay/fixedDelay.ts) ({ ms: number, breakAt: number, returnElapsed: boolean })

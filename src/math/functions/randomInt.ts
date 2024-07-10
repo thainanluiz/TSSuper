@@ -7,6 +7,7 @@ import { RandomIntProps } from "../types/randomIntProps";
  * @returns {number}
  *
  * @throws {Error} min and max must be numbers
+ * @throws {Error} min and max must be finite numbers
  * @throws {Error} min and max must be integers
  * @throws {Error} min must be less than or equal to max
  */
@@ -14,6 +15,11 @@ export function randomInt({ min, max }: RandomIntProps): number {
   // Validate that min and max are numbers
   if (typeof min !== "number" || typeof max !== "number") {
     throw new Error("min and max must be numbers");
+  }
+
+  // Validate that min and max are finite numbers
+  if (!isFinite(min) || !isFinite(max)) {
+    throw new Error("min and max must be finite numbers");
   }
 
   // Validate that min and max are integers

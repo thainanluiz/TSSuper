@@ -2,6 +2,18 @@
 
 This document summarizes the updates and changes made to the TSSUPER project.
 
+## [0.0.11] - 2024-07-10
+
+### Added
+
+- **fixedRepeater function**:
+
+  - Repeats a function for a fixed amount of time.
+
+### Links
+
+- [Version 0.0.11 on npm](https://www.npmjs.com/package/@thainanluiz/tssuper/v/0.0.11)
+
 ## [0.0.10] - 2024-07-10
 
 ### Added

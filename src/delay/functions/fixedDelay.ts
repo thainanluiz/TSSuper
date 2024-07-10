@@ -30,7 +30,8 @@ export function fixedDelay({ ms, breakAt, returnElapsed }: FixedDelayProps): {
   }
 
   let timeoutId: NodeJS.Timeout;
-  let startTime = Date.now();
+  let breakTimeoutId: NodeJS.Timeout;
+  const startTime = Date.now();
   let resolvePromise: (value?: number | void) => void;
 
   const promise = new Promise<number | void>((resolve) => {
@@ -45,7 +46,7 @@ export function fixedDelay({ ms, breakAt, returnElapsed }: FixedDelayProps): {
     }, ms);
 
     if (breakAt) {
-      setTimeout(() => {
+      breakTimeoutId = setTimeout(() => {
         clearTimeout(timeoutId);
         resolve(returnElapsed ? Date.now() - startTime : undefined);
       }, breakAt);
@@ -57,6 +58,9 @@ export function fixedDelay({ ms, breakAt, returnElapsed }: FixedDelayProps): {
     promise,
     cancel: () => {
       clearTimeout(timeoutId);
+      if (breakAt) {
+        clearTimeout(breakTimeoutId);
+      }
       resolvePromise(returnElapsed ? Date.now() - startTime : undefined);
     },
   };
