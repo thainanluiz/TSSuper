@@ -23,5 +23,6 @@ export function formatNumber({
     throw new Error("decimalPlaces must be an integer");
   }
 
+  // Format the number to the specified number of decimal places
   return Number(number.toFixed(decimalPlaces));
 }

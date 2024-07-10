@@ -19,6 +19,7 @@ How to use
 
 ```ts
 const { math } = require("@thainanluiz/tssuper");
+const { delay } = require("@thainanluiz/tssuper");
 ```
 
 <br>
@@ -29,7 +30,7 @@ The entire [changelog here] <br>
 
 [here]: https://www.npmjs.com/package/@thainanluiz/tssuper
 [1.0.0]: https://www.npmjs.com/package/@thainanluiz/tssuper/v/1.0.0
-[0.0.7]: https://www.npmjs.com/package/@thainanluiz/tssuper/v/0.0.7
+[0.0.10]: https://www.npmjs.com/package/@thainanluiz/tssuper/v/0.0.10
 [functions]: https://github.com/thainanluiz/TSSuper/blob/main/FUNCTIONS.md
 [examples]: https://github.com/thainanluiz/TSSuper/blob/main/examples/
 [changelog here]: https://github.com/thainanluiz/TSSuper/blob/main/CHANGELOG.md

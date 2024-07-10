@@ -26,5 +26,6 @@ export function randomInt({ min, max }: RandomIntProps): number {
     throw new Error("min must be less than or equal to max");
   }
 
+  // Generate a random integer between min and max
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }

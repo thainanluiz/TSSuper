@@ -1,13 +1,12 @@
 {
   "name": "@thainanluiz/tssuper",
-  "version": "0.0.7",
+  "version": "0.0.10",
   "description": "Simple add-on for TypeScript",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
     "build": "tsup",
-    "lint": "tsc",
     "test": "jest"
   },
   "keywords": [
@@ -29,7 +28,6 @@
   "author": "Thainan Luiz",
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "@changesets/cli": "^2.27.5",
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.4",
