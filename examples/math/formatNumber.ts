@@ -13,6 +13,10 @@ const formattedNumber = formatNumber(formatNumberProps);
 // Print the formatted number to the console
 console.log("Formatted number:", formattedNumber);
 
+// Halves are rounded away from zero, without floating-point surprises
+console.log("1.005 rounded:", formatNumber({ number: 1.005, decimalPlaces: 2 }));
+
 // Example output:
 // Formatted number: 123.46
+// 1.005 rounded: 1.01
 // (The output will be the same each time you run the script)

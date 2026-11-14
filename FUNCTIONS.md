@@ -4,35 +4,41 @@
 
 - [fixedRepeater](https://github.com/thainanluiz/TSSuper/blob/main/examples/delay/fixedRepeater.ts) ({ callback: Function, ms: number, times: number })
 
-  Repeats a function for a fixed amount of time.
+  Calls a function a fixed number of times, with a fixed delay between each call.
 
   ### Parameters
 
   - `callback`: Function to be repeated.
-  - `ms`: Time in milliseconds to repeat the function.
-  - `times`: Number of times to repeat the function.
+  - `ms`: Delay in milliseconds between each call (positive, at most `2147483647`).
+  - `times`: Number of times to call the function (positive integer).
 
   ### Returns
 
-  Returns a promise that resolves when the function is done repeating.
+  Returns an object `{ promise, cancel }`:
+
+  - `promise`: resolves with the number of calls made once all repetitions are done (or when `cancel` is called). If the callback throws, the repetitions stop and the promise rejects with that error.
+  - `cancel`: stops the repetitions and resolves the promise immediately.
 
   <br>
 
 ## 0.0.10
 
-- [fixedDelay](https://github.com/thainanluiz/TSSuper/blob/main/examples/delay/fixedDelay.ts) ({ ms: number, breakAt: number, returnElapsed: boolean })
+- [fixedDelay](https://github.com/thainanluiz/TSSuper/blob/main/examples/delay/fixedDelay.ts) ({ ms: number, breakAt?: number, returnElapsed?: boolean })
 
-  Delays the execution of a function for a fixed amount of time.
+  Creates a cancellable delay of a fixed amount of time.
 
   ### Parameters
 
-  - `ms`: Time in milliseconds to delay the execution.
-  - `breakAt`: Time in milliseconds to break the delay.
-  - `returnElapsed`: If `true`, returns the elapsed time.
+  - `ms`: Time in milliseconds to wait (positive, at most `2147483647`).
+  - `breakAt` (optional): Time in milliseconds after which the delay resolves early.
+  - `returnElapsed` (optional): If `true`, the promise resolves with the elapsed time.
 
   ### Returns
 
-  Returns the elapsed time if `returnElapsed` is `true`.
+  Returns an object `{ promise, cancel }`:
+
+  - `promise`: resolves when the delay ends (after `ms`, after `breakAt`, or when `cancel` is called) — with the elapsed time in milliseconds if `returnElapsed` is `true`, otherwise with `undefined`.
+  - `cancel`: ends the delay and resolves the promise immediately.
 
   <br>
 
@@ -40,12 +46,12 @@
 
 - [formatNumber](https://github.com/thainanluiz/TSSuper/blob/main/examples/math/formatNumber.ts) ({ number: number, decimalPlaces: number })
 
-  Formats a number to a specified number of decimal places.
+  Rounds a number to a specified number of decimal places (halves are rounded away from zero, so `1.005` becomes `1.01`).
 
   ### Parameters
 
-  - `number`: The number to be formatted.
-  - `decimalPlaces`: Number of decimal places to round to.
+  - `number`: The number to be formatted (must be finite).
+  - `decimalPlaces`: Number of decimal places to round to (integer from `0` to `100`).
 
   ### Returns
 
@@ -55,7 +61,7 @@
 
 ## 0.0.1
 
-- [randomInt](https://github.com/thainanluiz/TSSuper/blob/main/examples/math/randomInt.ts) ({ min: number, max: number })
+- [randomInt](https://github.com/thainanluiz/TSSuper/blob/main/examples/math/randomInt.ts) ({ min?: number, max?: number })
 
   Generates a random integer between the specified minimum and maximum values.
 
@@ -70,6 +76,6 @@
 
   ### Default Range
 
-  Default values for `min` and `max` are `{ min: 0, max: 10 }`.
+  Default values for `min` and `max` are `{ min: 0, max: 10 }`, so `randomInt()` returns an integer from 0 to 10.
 
   <br>

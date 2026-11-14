@@ -7,6 +7,10 @@
     "strict": true,
     "skipLibCheck": true,
     "noUncheckedIndexedAccess": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+    "paths": {
+      "@thainanluiz/tssuper": ["./src/index.ts"]
+    }
+  },
+  "include": ["src", "tests", "examples"]
 }

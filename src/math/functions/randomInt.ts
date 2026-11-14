@@ -2,7 +2,7 @@ import { RandomIntProps } from "../types/randomIntProps";
 
 /**
  * Generate a random integer between min and max (inclusive)
- * @param {RandomIntProps} { min, max }
+ * @param {RandomIntProps} { min = 0, max = 10 }
  *
  * @returns {number}
  *
@@ -11,14 +11,14 @@ import { RandomIntProps } from "../types/randomIntProps";
  * @throws {Error} min and max must be integers
  * @throws {Error} min must be less than or equal to max
  */
-export function randomInt({ min, max }: RandomIntProps): number {
+export function randomInt({ min = 0, max = 10 }: RandomIntProps = {}): number {
   // Validate that min and max are numbers
   if (typeof min !== "number" || typeof max !== "number") {
     throw new Error("min and max must be numbers");
   }
 
   // Validate that min and max are finite numbers
-  if (!isFinite(min) || !isFinite(max)) {
+  if (!Number.isFinite(min) || !Number.isFinite(max)) {
     throw new Error("min and max must be finite numbers");
   }
 

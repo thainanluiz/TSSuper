@@ -1,23 +1,19 @@
-// Import the math module from "@thainanluiz/tssuper"
+// Import the delay module from "@thainanluiz/tssuper"
 import { delay } from "@thainanluiz/tssuper";
 
-// Destructure the math module to obtain the fixedDelay function
+// Destructure the delay module to obtain the fixedDelay function
 const { fixedDelay } = delay;
 
-// Define an object with properties ms, breakAt, and returnElapsed to specify the desired delay and options
+// Wait 30 seconds, but stop waiting after 25 seconds (breakAt) and resolve with the elapsed time
 const fixedDelayProps = { ms: 30000, breakAt: 25000, returnElapsed: true };
 
 // Create a fixed delay using the fixedDelay function
 const { promise, cancel } = fixedDelay(fixedDelayProps);
 
-// Handle the promise resolution to log the elapsed time or completion
-promise
-  .then((elapsed) => {
-    console.log(`The delay was completed in ${elapsed} milliseconds.`);
-  })
-  .catch((error) => {
-    console.error("Error during the delay:", error);
-  });
+// Handle the promise resolution to log the elapsed time
+promise.then((elapsed) => {
+  console.log(`The delay finished after ${elapsed} milliseconds.`);
+});
 
 // Optionally, cancel the delay before its completion
 setTimeout(() => {
@@ -26,5 +22,6 @@ setTimeout(() => {
 }, 20000); // Cancel the delay after 20 seconds
 
 // Example output:
-// The delay was completed in 25000 milliseconds.
-// (The output may vary depending on whether the delay was completed or canceled)
+// Canceling the delay...
+// The delay finished after 20000 milliseconds.
+// (Without the cancel call, it would finish after 25000 milliseconds because of breakAt)

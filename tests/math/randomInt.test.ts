@@ -1,10 +1,38 @@
 import { randomInt } from "../../src/math/functions/randomInt";
 
 describe("randomInt", () => {
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+
   test("should generate a random integer between min and max", () => {
     const result = randomInt({ min: 1, max: 10 });
+    expect(Number.isInteger(result)).toBe(true);
     expect(result).toBeGreaterThanOrEqual(1);
     expect(result).toBeLessThanOrEqual(10);
+  });
+
+  test("should include both min and max in the range", () => {
+    jest.spyOn(Math, "random").mockReturnValue(0);
+    expect(randomInt({ min: -5, max: 5 })).toBe(-5);
+
+    jest.spyOn(Math, "random").mockReturnValue(0.9999999999);
+    expect(randomInt({ min: -5, max: 5 })).toBe(5);
+  });
+
+  test("should return min when min equals max", () => {
+    expect(randomInt({ min: 7, max: 7 })).toBe(7);
+  });
+
+  test("should default to the range 0..10", () => {
+    jest.spyOn(Math, "random").mockReturnValue(0);
+    expect(randomInt()).toBe(0);
+    expect(randomInt({})).toBe(0);
+
+    jest.spyOn(Math, "random").mockReturnValue(0.9999999999);
+    expect(randomInt()).toBe(10);
+    expect(randomInt({ min: 5 })).toBe(10);
+    expect(randomInt({ max: 3 })).toBe(3);
   });
 
   test("should throw an error if min or max is not a number", () => {

@@ -1,10 +1,10 @@
-// Import the math module from "@thainanluiz/tssuper"
+// Import the delay module from "@thainanluiz/tssuper"
 import { delay } from "@thainanluiz/tssuper";
 
-// Destructure the math module to obtain the fixedRepeater function
+// Destructure the delay module to obtain the fixedRepeater function
 const { fixedRepeater } = delay;
 
-// Define an object with properties callback, ms and times to specify the desired callback, delay and number of repetitions
+// Call the callback 5 times, once every second
 const fixedRepeaterProps = {
   callback: () => console.log("Hello, world!"),
   ms: 1000,
@@ -14,10 +14,11 @@ const fixedRepeaterProps = {
 // Create a fixed repeater using the fixedRepeater function
 const { promise, cancel } = fixedRepeater(fixedRepeaterProps);
 
-// Handle the promise resolution to log the completion
+// The promise resolves with the number of calls made,
+// or rejects (and stops repeating) if the callback throws
 promise
-  .then(() => {
-    console.log("The fixed repeater has completed all repetitions.");
+  .then((count) => {
+    console.log(`The callback was called ${count} times.`);
   })
   .catch((error) => {
     console.error("Error during the fixed repeater:", error);
@@ -27,13 +28,12 @@ promise
 setTimeout(() => {
   console.log("Canceling the fixed repeater...");
   cancel();
-}, 3000); // Cancel the fixed repeater after 3 seconds
+}, 3500); // Cancel the fixed repeater after 3.5 seconds
 
 // Example output:
 // Hello, world!
 // Hello, world!
 // Hello, world!
-// Hello, world!
-// Hello, world!
-// The fixed repeater has completed all repetitions.
-// (The output may vary depending on whether the fixed repeater was completed or canceled)
+// Canceling the fixed repeater...
+// The callback was called 3 times.
+// (Without the cancel call, it would print "Hello, world!" 5 times)

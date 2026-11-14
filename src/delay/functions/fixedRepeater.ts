@@ -1,17 +1,20 @@
-import { FixedRepeaterProps } from "./../types/fixedRepeaterProps";
+import { FixedRepeaterProps } from "../types/fixedRepeaterProps";
+import { MAX_DELAY_MS, isValidDelay } from "../utils/isValidDelay";
 
 /**
  * Create a fixed repeater function that calls a given function a given number of times with a fixed delay between each call.
  * @param {FixedRepeaterProps} { callback, ms, times }
  *
- * @returns {object} An object containing the promise and a cancel function
+ * @returns {object} An object containing the promise and a cancel function.
+ * The promise resolves with the number of completed calls, or rejects with the
+ * error thrown by the callback (which also stops the repetitions).
  *
  * @throws {Error} callback must be a function
- * @throws {Error} ms must be a positive number
- * @throws {Error} times must be a positive number
+ * @throws {Error} ms must be a positive number (at most 2147483647)
+ * @throws {Error} times must be a positive integer
  */
 export function fixedRepeater({ callback, ms, times }: FixedRepeaterProps): {
-  promise: Promise<number | void>;
+  promise: Promise<number>;
   cancel: () => void;
 } {
   // Validate that callback is a function
@@ -19,33 +22,33 @@ export function fixedRepeater({ callback, ms, times }: FixedRepeaterProps): {
     throw new Error("callback must be a function");
   }
 
-  // Validate that ms is a positive number
-  if (typeof ms !== "number" || ms <= 0) {
-    throw new Error("ms must be a positive number");
+  // Validate that ms is a positive number within the timer limit
+  if (!isValidDelay(ms)) {
+    throw new Error(`ms must be a positive number (at most ${MAX_DELAY_MS})`);
   }
 
-  // Validate that times is a positive number
-  if (typeof times !== "number" || times <= 0) {
-    throw new Error("times must be a positive number");
+  // Validate that times is a positive integer
+  if (!Number.isInteger(times) || times <= 0) {
+    throw new Error("times must be a positive integer");
   }
 
   let count = 0;
-  let canceled = false;
-  let intervalId: NodeJS.Timeout;
+  let intervalId: ReturnType<typeof setInterval> | undefined;
+  let resolvePromise!: (count: number) => void;
 
-  let resolvePromise: (value?: number | void) => void;
-
-  const promise = new Promise<number | void>((resolve) => {
+  const promise = new Promise<number>((resolve, reject) => {
     resolvePromise = resolve;
 
     intervalId = setInterval(() => {
-      if (canceled) {
+      try {
+        callback();
+      } catch (error) {
+        // Stop repeating and surface the error through the promise
         clearInterval(intervalId);
-        resolve(count);
+        reject(error);
         return;
       }
 
-      callback();
       count++;
 
       if (count >= times) {
@@ -59,7 +62,6 @@ export function fixedRepeater({ callback, ms, times }: FixedRepeaterProps): {
   return {
     promise,
     cancel: () => {
-      canceled = true;
       clearInterval(intervalId);
       resolvePromise(count);
     },

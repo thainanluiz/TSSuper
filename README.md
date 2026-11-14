@@ -2,7 +2,7 @@
 
 ## Simple add-on for TypeScript
 
-![TSSuper logo](https://github.com/thainanluiz/TSSuper/blob/main/assets/logo/tssuper259x259.png "Logo TSSuper")
+![TSSuper logo](https://raw.githubusercontent.com/thainanluiz/TSSuper/main/assets/logo/tssuper259x259.png "Logo TSSuper")
 
 <br>
 How to install
@@ -18,8 +18,11 @@ Package available [here] | current stable version [0.0.11] | current version [0.
 How to use
 
 ```ts
-const { math } = require("@thainanluiz/tssuper");
-const { delay } = require("@thainanluiz/tssuper");
+// ES modules / TypeScript
+import { math, delay } from "@thainanluiz/tssuper";
+
+// CommonJS
+const { math, delay } = require("@thainanluiz/tssuper");
 ```
 
 <br>
@@ -29,7 +32,6 @@ See [examples] folder <br>
 The entire [changelog here] <br>
 
 [here]: https://www.npmjs.com/package/@thainanluiz/tssuper
-[1.0.0]: https://www.npmjs.com/package/@thainanluiz/tssuper/v/1.0.0
 [0.0.11]: https://www.npmjs.com/package/@thainanluiz/tssuper/v/0.0.11
 [functions]: https://github.com/thainanluiz/TSSuper/blob/main/FUNCTIONS.md
 [examples]: https://github.com/thainanluiz/TSSuper/blob/main/examples/

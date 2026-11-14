@@ -2,6 +2,21 @@
 
 This document summarizes the updates and changes made to the TSSUPER project.
 
+## [Unreleased]
+
+### Fixed
+
+- **formatNumber**: rounds correctly when the binary representation is inexact (`1.005` → `1.01`, previously `1`) and never returns `-0`. `decimalPlaces` above `100` now throws a clear error instead of a `RangeError` from `toFixed`.
+- **randomInt**: the documented default range `{ min: 0, max: 10 }` now actually works (`randomInt()` / `randomInt({})` used to throw).
+- **fixedDelay**: rejects `NaN` and delays above `2147483647` ms (they used to fire after ~1ms). The pending `breakAt` timer is now cleared when the delay ends, so it no longer keeps the Node.js process alive.
+- **fixedRepeater**: if the callback throws, the repetitions stop and the promise rejects with the error (previously the interval kept running forever and the promise never settled). `times` must be a positive integer (`NaN` used to repeat forever, `2.5` ran 3 times). `ms` has the same limits as `fixedDelay`. The promise is now typed as `Promise<number>`.
+
+### Changed
+
+- Added an `exports` map so Node.js ESM consumers get the ESM build and the matching type declarations.
+- The npm package now only ships the `dist` folder (`files` field), and `prepublishOnly` type-checks, tests and builds before publishing.
+- Removed the unused `ulid` dependency.
+
 ## [0.0.11] - 2024-07-10
 
 ### Added

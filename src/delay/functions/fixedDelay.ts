@@ -1,4 +1,5 @@
-import { FixedDelayProps } from "./../types/fixedDelayProps";
+import { FixedDelayProps } from "../types/fixedDelayProps";
+import { MAX_DELAY_MS, isValidDelay } from "../utils/isValidDelay";
 
 /**
  * Create a fixed delay function that returns a promise that resolves after a given number of milliseconds.
@@ -6,22 +7,24 @@ import { FixedDelayProps } from "./../types/fixedDelayProps";
  *
  * @returns {object} An object containing the promise and a cancel function
  *
- * @throws {Error} ms must be a positive number
- * @throws {Error} breakAt must be a positive number if defined
+ * @throws {Error} ms must be a positive number (at most 2147483647)
+ * @throws {Error} breakAt must be a positive number if defined (at most 2147483647)
  * @throws {Error} returnElapsed must be a boolean if defined
  */
 export function fixedDelay({ ms, breakAt, returnElapsed }: FixedDelayProps): {
   promise: Promise<number | void>;
   cancel: () => void;
 } {
-  // Validate that ms is a positive number
-  if (typeof ms !== "number" || ms <= 0) {
-    throw new Error("ms must be a positive number");
+  // Validate that ms is a positive number within the timer limit
+  if (!isValidDelay(ms)) {
+    throw new Error(`ms must be a positive number (at most ${MAX_DELAY_MS})`);
   }
 
-  // Validate that breakAt is a positive number if defined
-  if (breakAt !== undefined && (typeof breakAt !== "number" || breakAt <= 0)) {
-    throw new Error("breakAt must be a positive number if defined");
+  // Validate that breakAt is a positive number within the timer limit if defined
+  if (breakAt !== undefined && !isValidDelay(breakAt)) {
+    throw new Error(
+      `breakAt must be a positive number if defined (at most ${MAX_DELAY_MS})`
+    );
   }
 
   // Validate that returnElapsed is a boolean if defined
@@ -29,39 +32,27 @@ export function fixedDelay({ ms, breakAt, returnElapsed }: FixedDelayProps): {
     throw new Error("returnElapsed must be a boolean if defined");
   }
 
-  let timeoutId: NodeJS.Timeout;
-  let breakTimeoutId: NodeJS.Timeout;
   const startTime = Date.now();
-  let resolvePromise: (value?: number | void) => void;
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+  let breakTimeoutId: ReturnType<typeof setTimeout> | undefined;
+  let finish!: () => void;
 
   const promise = new Promise<number | void>((resolve) => {
-    resolvePromise = resolve;
-
-    timeoutId = setTimeout(() => {
-      if (returnElapsed) {
-        resolve(Date.now() - startTime);
-      } else {
-        resolve();
-      }
-    }, ms);
-
-    if (breakAt) {
-      breakTimeoutId = setTimeout(() => {
-        clearTimeout(timeoutId);
-        resolve(returnElapsed ? Date.now() - startTime : undefined);
-      }, breakAt);
-    }
+    // Clear every pending timer (so none keeps the process alive) and resolve.
+    // Calling it more than once is harmless: a promise only resolves once.
+    finish = () => {
+      clearTimeout(timeoutId);
+      clearTimeout(breakTimeoutId);
+      resolve(returnElapsed ? Date.now() - startTime : undefined);
+    };
   });
 
+  timeoutId = setTimeout(finish, ms);
+
+  if (breakAt !== undefined) {
+    breakTimeoutId = setTimeout(finish, breakAt);
+  }
+
   // Return the promise and a cancel function
-  return {
-    promise,
-    cancel: () => {
-      clearTimeout(timeoutId);
-      if (breakAt) {
-        clearTimeout(breakTimeoutId);
-      }
-      resolvePromise(returnElapsed ? Date.now() - startTime : undefined);
-    },
-  };
+  return { promise, cancel: finish };
 }
