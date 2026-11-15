@@ -1,4 +1,4 @@
-import { FixedRepeaterProps } from "../types/fixedRepeaterProps";
+import type { FixedRepeaterProps } from "../types/fixedRepeaterProps";
 import { MAX_DELAY_MS, isValidDelay } from "../utils/isValidDelay";
 
 /**

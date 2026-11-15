@@ -1,4 +1,4 @@
-import { RandomIntProps } from "../types/randomIntProps";
+import type { RandomIntProps } from "../types/randomIntProps";
 
 /**
  * Generate a random integer between min and max (inclusive)

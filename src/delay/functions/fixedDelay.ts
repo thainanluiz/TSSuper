@@ -1,16 +1,52 @@
-import { FixedDelayProps } from "../types/fixedDelayProps";
+import type { FixedDelayProps } from "../types/fixedDelayProps";
 import { MAX_DELAY_MS, isValidDelay } from "../utils/isValidDelay";
 
 /**
  * Create a fixed delay function that returns a promise that resolves after a given number of milliseconds.
- * @param {FixedDelayProps} { ms, breakAt, returnElapsed }
+ * @param {FixedDelayProps} props { ms, breakAt } with returnElapsed omitted or false
  *
- * @returns {object} An object containing the promise and a cancel function
+ * @returns {object} An object containing the promise, which resolves with undefined,
+ * and a cancel function that resolves it immediately
  *
  * @throws {Error} ms must be a positive number (at most 2147483647)
  * @throws {Error} breakAt must be a positive number if defined (at most 2147483647)
  * @throws {Error} returnElapsed must be a boolean if defined
  */
+export function fixedDelay(props: FixedDelayProps & { returnElapsed?: false }): {
+  promise: Promise<void>;
+  cancel: () => void;
+};
+/**
+ * Create a fixed delay function that returns a promise that resolves after a given number of milliseconds.
+ * @param {FixedDelayProps} props { ms, breakAt } with returnElapsed: true
+ *
+ * @returns {object} An object containing the promise, which resolves with the elapsed
+ * time in milliseconds, and a cancel function that resolves it immediately
+ *
+ * @throws {Error} ms must be a positive number (at most 2147483647)
+ * @throws {Error} breakAt must be a positive number if defined (at most 2147483647)
+ * @throws {Error} returnElapsed must be a boolean if defined
+ */
+export function fixedDelay(props: FixedDelayProps & { returnElapsed: true }): {
+  promise: Promise<number>;
+  cancel: () => void;
+};
+/**
+ * Create a fixed delay function that returns a promise that resolves after a given number of milliseconds.
+ * @param {FixedDelayProps} props { ms, breakAt, returnElapsed }
+ *
+ * @returns {object} An object containing the promise, which resolves with the elapsed
+ * time in milliseconds if returnElapsed is true (undefined otherwise), and a cancel
+ * function that resolves it immediately
+ *
+ * @throws {Error} ms must be a positive number (at most 2147483647)
+ * @throws {Error} breakAt must be a positive number if defined (at most 2147483647)
+ * @throws {Error} returnElapsed must be a boolean if defined
+ */
+export function fixedDelay(props: FixedDelayProps): {
+  promise: Promise<number | void>;
+  cancel: () => void;
+};
 export function fixedDelay({ ms, breakAt, returnElapsed }: FixedDelayProps): {
   promise: Promise<number | void>;
   cancel: () => void;

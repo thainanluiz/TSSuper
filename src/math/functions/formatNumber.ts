@@ -1,4 +1,4 @@
-import { FormatNumberProps } from "../types/formatNumberProps";
+import type { FormatNumberProps } from "../types/formatNumberProps";
 
 const MAX_DECIMAL_PLACES = 100;
 
