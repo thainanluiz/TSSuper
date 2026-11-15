@@ -1,6 +1,6 @@
 # Current Functions Available
 
-## 0.0.11
+## 0.0.12
 
 - [fixedRepeater](https://github.com/thainanluiz/TSSuper/blob/main/examples/delay/fixedRepeater.ts) ({ callback: Function, ms: number, times: number })
 

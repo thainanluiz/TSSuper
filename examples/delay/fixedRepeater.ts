@@ -4,10 +4,10 @@ import { delay } from "@thainanluiz/tssuper";
 // Destructure the delay module to obtain the fixedRepeater function
 const { fixedRepeater } = delay;
 
-// Call the callback 5 times, once every second
+// Call the callback 5 times, once every 200 milliseconds
 const fixedRepeaterProps = {
   callback: () => console.log("Hello, world!"),
-  ms: 1000,
+  ms: 200,
   times: 5,
 };
 
@@ -28,7 +28,7 @@ promise
 setTimeout(() => {
   console.log("Canceling the fixed repeater...");
   cancel();
-}, 3500); // Cancel the fixed repeater after 3.5 seconds
+}, 700); // Cancel the fixed repeater after 700 milliseconds (after the 3rd call)
 
 // Example output:
 // Hello, world!
