@@ -1,4 +1,7 @@
-import { formatNumber } from "../../src/math/functions/formatNumber";
+import { expectError } from "../helpers/errors";
+import { math } from "../helpers/subject";
+
+const { formatNumber } = math;
 
 describe("formatNumber", () => {
   test("should format the number to the specified number of decimal places", () => {
@@ -9,6 +12,13 @@ describe("formatNumber", () => {
   test("should format the number to zero decimal places", () => {
     const result = formatNumber({ number: 3.1415926535, decimalPlaces: 0 });
     expect(result).toBe(3);
+  });
+
+  test("should treat decimalPlaces -0 as zero decimal places", () => {
+    expect(formatNumber({ number: 3.1415926535, decimalPlaces: -0 })).toBe(3);
+    expect(formatNumber({ number: 2.5, decimalPlaces: -0 })).toBe(3);
+    expect(formatNumber({ number: -2.5, decimalPlaces: -0 })).toBe(-3);
+    expect(formatNumber({ number: -0.4, decimalPlaces: -0 })).toBe(0);
   });
 
   test("should round half away from zero without floating-point errors", () => {
@@ -44,34 +54,55 @@ describe("formatNumber", () => {
   });
 
   test("should throw an error if number is not a number", () => {
-    expect(() =>
-      formatNumber({ number: "3.14" as any, decimalPlaces: 2 })
-    ).toThrow("number must be a number");
-  });
-
-  test("should throw an error if number is not finite", () => {
-    expect(() => formatNumber({ number: Infinity, decimalPlaces: 2 })).toThrow(
-      "number must be a finite number"
-    );
-    expect(() => formatNumber({ number: NaN, decimalPlaces: 2 })).toThrow(
-      "number must be a finite number"
+    expectError(
+      () => formatNumber({ number: "3.14" as any, decimalPlaces: 2 }),
+      Error,
+      "number must be a number"
     );
   });
 
-  test("should throw an error if decimalPlaces is not an integer", () => {
-    expect(() => formatNumber({ number: 3.14, decimalPlaces: 2.5 })).toThrow(
+  test.each([Infinity, -Infinity, NaN])(
+    "should throw an error if number is %p",
+    (number) => {
+      expectError(
+        () => formatNumber({ number, decimalPlaces: 2 }),
+        Error,
+        "number must be a finite number"
+      );
+    }
+  );
+
+  test.each([2.5, NaN, Infinity, -Infinity])(
+    "should throw an error if decimalPlaces is %p",
+    (decimalPlaces) => {
+      expectError(
+        () => formatNumber({ number: 3.14, decimalPlaces }),
+        Error,
+        "decimalPlaces must be an integer"
+      );
+    }
+  );
+
+  test("should throw an error if decimalPlaces is a numeric string", () => {
+    expectError(
+      () => formatNumber({ number: 3.14, decimalPlaces: "2" as any }),
+      Error,
       "decimalPlaces must be an integer"
     );
   });
 
   test("should throw an error if decimalPlaces is negative", () => {
-    expect(() => formatNumber({ number: 3.14, decimalPlaces: -1 })).toThrow(
+    expectError(
+      () => formatNumber({ number: 3.14, decimalPlaces: -1 }),
+      Error,
       "decimalPlaces must be non-negative"
     );
   });
 
   test("should throw an error if decimalPlaces is greater than 100", () => {
-    expect(() => formatNumber({ number: 3.14, decimalPlaces: 101 })).toThrow(
+    expectError(
+      () => formatNumber({ number: 3.14, decimalPlaces: 101 }),
+      Error,
       "decimalPlaces must be at most 100"
     );
   });
