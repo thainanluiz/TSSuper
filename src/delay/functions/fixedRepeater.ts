@@ -40,6 +40,7 @@ export function fixedRepeater({ callback, ms, times }: FixedRepeaterProps): {
     resolvePromise = resolve;
 
     intervalId = setInterval(() => {
+      count++;
       try {
         callback();
       } catch (error) {
@@ -48,8 +49,6 @@ export function fixedRepeater({ callback, ms, times }: FixedRepeaterProps): {
         reject(error);
         return;
       }
-
-      count++;
 
       if (count >= times) {
         clearInterval(intervalId);

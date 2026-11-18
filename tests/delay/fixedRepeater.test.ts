@@ -74,6 +74,24 @@ describe("fixedRepeater", () => {
     await expect(promise).resolves.toBe(2);
   });
 
+  test.each([1, 2, 3])(
+    "counts the current call when cancelled inside callback %i",
+    async (cancelOn) => {
+      let calls = 0;
+      const callback = jest.fn(() => {
+        calls++;
+        if (calls === cancelOn) repeater.cancel();
+      });
+      const repeater = fixedRepeater({ callback, ms: 1000, times: 3 });
+
+      advanceTime(10000);
+
+      await expect(repeater.promise).resolves.toBe(cancelOn);
+      expect(callback).toHaveBeenCalledTimes(cancelOn);
+      expect(pendingTimers()).toBe(0);
+    }
+  );
+
   test("should resolve with 0 if cancel is called before the first call", async () => {
     const callback = jest.fn();
     const { promise, cancel } = fixedRepeater({ callback, ms: 1000, times: 3 });
